@@ -15,17 +15,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.questionreponse.entity.Answer;
+import com.example.questionreponse.entity.MyUser;
+import com.example.questionreponse.requests.AnswerRequest;
 import com.example.questionreponse.service.AnswerService;
+import com.example.questionreponse.service.MyUserService;
 
 @RestController
 @RequestMapping("/api")
 public class AnswerController {
     @Autowired
     private AnswerService service;
+    @Autowired
+    private MyUserService userService;
 
     @PostMapping("/create-answer")
-    public ResponseEntity<Answer> create(@RequestBody Answer company ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(company));
+    public ResponseEntity<Answer> create(@RequestBody AnswerRequest answerRequest){
+    // Fetch the associated user
+    MyUser user = userService.findById(answerRequest.getUserId());
+
+    // Make sure the user exists
+    if (user == null) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+    // Create the Answer entity
+    Answer answer = new Answer();
+    answer.setContent(answerRequest.getContent());
+    answer.setUser(user);
+
+    // Create the answer
+    Answer createdAnswer = service.create(answer);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdAnswer);
     }
 
     @GetMapping("/all-answer")
