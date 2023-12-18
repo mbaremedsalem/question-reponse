@@ -16,7 +16,7 @@ public class Rating {
     private int value;
     
     @ManyToOne
-    private User user;
+    private MyUser user;
 
     @ManyToOne
     private Question question;
