@@ -1,5 +1,5 @@
 package com.example.questionreponse.controller;
 
-public class RoleController {
+public class RatingController {
     
 }

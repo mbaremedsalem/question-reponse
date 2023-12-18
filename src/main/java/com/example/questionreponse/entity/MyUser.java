@@ -1,31 +1,36 @@
 package com.example.questionreponse.entity;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Id; 
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.OneToMany;
+
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 public class MyUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id; 
-    private String username;
-    private String lastname;
-    @Column(nullable = false,unique = true,length = 8)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
     private String phone;
-    private String password;
+    @Column(nullable = false)
+    private String username;
+    @Column(nullable = true)
     private String email;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+
+
+    
+    @ManyToOne
     private Role role;
+    @OneToMany(mappedBy = "user")
+    private List<Question> questions;
+    @OneToMany(mappedBy = "user")
+    private List<Answer> answers;
+
+
+
+    
 }

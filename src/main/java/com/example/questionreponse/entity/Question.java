@@ -1,5 +1,6 @@
 package com.example.questionreponse.entity;
 
+
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -7,21 +8,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Role {
+public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String content;
+    @Column()
+    private String creationDate;
+    @Column(nullable = false)
+    private Boolean isValide;
 
-    @OneToMany(mappedBy = "role")
-    private List<MyUser> users;
+
+
+    @ManyToOne
+    private MyUser user;
+
+    @OneToMany(mappedBy = "question")
+    private List<Answer> answers;
     
 
 
 
-    
+
+
+
+
 }
