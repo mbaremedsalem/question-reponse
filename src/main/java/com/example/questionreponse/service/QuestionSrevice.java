@@ -44,8 +44,8 @@ public class QuestionSrevice {
             Question existingQuestion = existingQuestionOptional.get();
             // Update fields of existingCompany with values from updatedCompany
             existingQuestion.setContent(updatedQuestion.getContent());
-            existingQuestion.setCreationDate(updatedQuestion.getCreationDate());
-            existingQuestion.setIsValide(updatedQuestion.getIsValide());
+            
+            
            
           
             return repository.save(existingQuestion);

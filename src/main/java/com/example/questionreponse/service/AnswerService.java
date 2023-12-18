@@ -44,11 +44,8 @@ public class AnswerService {
         if (existingAnswerOptional.isPresent()) {
             Answer existingAnswer = existingAnswerOptional.get();
             // Update fields of existingCompany with values from updatedCompany
-            existingAnswer.setContent(updatedAnswer.getContent());
-            existingAnswer.setNote(updatedAnswer.getNote());
-            existingAnswer.setDescription(updatedAnswer.getDescription());
-            existingAnswer.setDate(updatedAnswer.getDate());
-          
+            existingAnswer.setContent(updatedAnswer.getContent()); 
+            existingAnswer.setUser(updatedAnswer.getUser());    
             return repository.save(existingAnswer);
         } else {
             return null; // Or throw an exception if you prefer
