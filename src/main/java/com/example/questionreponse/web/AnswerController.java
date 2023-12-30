@@ -1,4 +1,4 @@
-package com.example.questionreponse.controller;
+package com.example.questionreponse.web;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import com.example.questionreponse.entity.Answer;
 import com.example.questionreponse.entity.MyUser;
 import com.example.questionreponse.requests.AnswerRequest;
 import com.example.questionreponse.service.AnswerService;
-import com.example.questionreponse.service.MyUserService;
+import com.example.questionreponse.service.UserServices;
 
 @RestController
 @RequestMapping("/api")
@@ -26,7 +26,7 @@ public class AnswerController {
     @Autowired
     private AnswerService service;
     @Autowired
-    private MyUserService userService;
+    private UserServices userService;
 
     @PostMapping("/create-answer")
     public ResponseEntity<Answer> create(@RequestBody AnswerRequest answerRequest){
@@ -49,12 +49,12 @@ public class AnswerController {
     }
 
     @GetMapping("/all-answer")
-    public ResponseEntity<List<Answer>> getAllCompany(){
+    public ResponseEntity<List<Answer>> getAllAnswer(){
         return ResponseEntity.status(HttpStatus.OK).body(service.findAll());
     }
     
     @DeleteMapping("/delete-answer/{id}")
-    public ResponseEntity<String> deleteCompany(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAnswer(@PathVariable Long id) {
         try {
             boolean deletionStatus = service.delete(id);
     
@@ -71,7 +71,7 @@ public class AnswerController {
     }
 
     @PutMapping("/update-anwser/{AnswerId}")
-    public ResponseEntity<Answer> updateCompany(
+    public ResponseEntity<Answer> updateAnswer(
             @PathVariable Long answerId,
             @RequestBody Answer updatedAnswer) {
 

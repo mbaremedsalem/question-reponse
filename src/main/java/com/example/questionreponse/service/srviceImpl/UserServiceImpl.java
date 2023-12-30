@@ -1,0 +1,71 @@
+package com.example.questionreponse.service.srviceImpl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import com.example.questionreponse.dao.MyUserRepository;
+import com.example.questionreponse.dao.RoleRepository;
+import com.example.questionreponse.entity.MyUser;
+import com.example.questionreponse.entity.Role;
+import com.example.questionreponse.service.UserServices;
+import java.util.List;
+
+@Service
+public class UserServiceImpl implements UserServices {
+
+    @Autowired
+    private MyUserRepository appUserRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    @Override
+    public ResponseEntity<?> addUser(MyUser userInfo) {
+        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+        Role roleUse = roleRepository.findById(2).get();
+        userInfo.setRole(roleUse);
+        appUserRepository.save(userInfo);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @Override
+    public MyUser fidUserByUsername(String username) {
+        return appUserRepository.findByUsername(username).get();
+    }
+
+    @Override
+    public void DeleteUser(long id) {
+        appUserRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean findUserById(long id) {
+        if (appUserRepository.findById(id).isPresent()) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<MyUser> getUsers() {
+        return appUserRepository.findAll();
+    }
+
+    public MyUser getUserById(long id) {
+        if (appUserRepository.findById(id).isPresent()) {
+            return appUserRepository.findById(id).get();
+        }
+        return null;
+    }
+
+    @Override
+    public MyUser findById(long userId) {
+        return appUserRepository.findById(userId).orElse(null);
+    }
+}

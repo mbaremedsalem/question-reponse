@@ -18,8 +18,8 @@ public class AnswerService {
         return repository.findAll();
     }
 
-    public Answer create(Answer server){
-        return repository.save(server);
+    public Answer create(Answer answer){
+        return repository.save(answer);
     }
 
     public boolean delete(Long id) {
